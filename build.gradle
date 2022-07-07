@@ -10,6 +10,7 @@ group = 'com.netflix.photon'
 
 javadoc {
     options.encoding = 'UTF-8'
+    exclude "**"
 }
 
 compileJava {
@@ -104,6 +105,18 @@ jacocoTestReport {
         html.enabled false
     }
 }
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class': 'com.netflix.imflibrary.app.IMPAnalyzer'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+
 
 //Following line will enable including compile time dependencies as a part of the
 //compile and build process.
